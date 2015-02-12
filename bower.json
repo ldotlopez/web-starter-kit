@@ -1,0 +1,22 @@
+{
+  "name": "ldot-skel",
+  "version": "0.0.1",
+  "authors": [
+    "Luis López <luis@cuarentaydos.com>"
+  ],
+  "description": "Personal skel for web projects",
+  "main": "src/index.html",
+  "license": "GPL-3",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "bootstrap": "~3.3.2",
+    "less": "~2.4.0"
+  }
+}
