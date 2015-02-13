@@ -11,7 +11,7 @@ var
     processhtml = require('gulp-processhtml'),
     uglify = require('gulp-uglify');
 
-gulp.task('default', ["styles", "scripts", "files"], [], function() {
+gulp.task('default', ["styles", "scripts", "files"], function() {
 
 });
 
@@ -25,6 +25,9 @@ gulp.task("styles", [], function () {
                 ]),
 
             gulp
+                .src('./src/styles/**/*.css'),
+
+            gulp
                 .src('./src/styles/**/*.less')
                 .pipe(less({
                     paths: [ path.join(__dirname, 'less', 'includes') ]
@@ -32,7 +35,7 @@ gulp.task("styles", [], function () {
                 .pipe(mincss())
         )
         .pipe(concat('main.css'))
-        .pipe(gulp.dest('./build/styles/'))
+        .pipe(gulp.dest('./dist/styles/'))
 });
 
 gulp.task("scripts", [], function () {
@@ -48,7 +51,21 @@ gulp.task("scripts", [], function () {
                 .pipe(uglify())
         )
         .pipe(concat('main.js'))
-        .pipe(gulp.dest('./build/scripts/'))
+        .pipe(gulp.dest('./dist/scripts/'))
+});
+
+
+gulp.task("bootstrap-files", [], function () {
+    return gulp
+        .src("./src/_components/bootstrap/dist/fonts/**")
+        .pipe(copy("./dist/fonts/", {prefix: 5}));
+});
+
+
+gulp.task("assets", [], function () {
+    return gulp
+        .src("./src/assets/**")
+        .pipe(copy("./dist/assets/", {prefix: 2}));
 });
 
 
@@ -57,17 +74,11 @@ gulp.task("app-files", [], function () {
         .src("./src/**/*.html")
         .pipe(processhtml({}))
         .pipe(minhtml())
-        .pipe(gulp.dest("./build/"));
+        .pipe(gulp.dest("./dist/"));
 });
 
 
-gulp.task("bootstrap-files", [], function () {
-    return gulp
-        .src("./src/_components/bootstrap/dist/fonts/**")
-        .pipe(copy("./build/fonts/", {prefix: 5}));
-});
-
-gulp.task("files", ["bootstrap-files", "app-files"], function () {
+gulp.task("files", ["bootstrap-files", "assets", "app-files"], function () {
 
 });
 
