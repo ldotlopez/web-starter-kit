@@ -10,6 +10,8 @@ var
     minhtml = require('gulp-minify-html');
     processhtml = require('gulp-processhtml'),
     uglify = require('gulp-uglify');
+    webserver = require('gulp-webserver');
+
 
 gulp.task('default', ["styles", "scripts", "files"], function() {
 
@@ -85,4 +87,15 @@ gulp.task("files", ["bootstrap-files", "assets", "app-files"], function () {
 
 gulp.task('clean', [], function (cb) {
   del('build/', cb);
+});
+
+
+gulp.task('serve', function() {
+    return gulp
+        .src('src')
+        .pipe(webserver({
+            livereload: true,
+            directoryListing: false,
+            open: false
+        }));
 });
